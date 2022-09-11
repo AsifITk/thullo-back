@@ -132,7 +132,7 @@ router.post("/edit", async (req, res) => {
         updatedBoard = await BoardModel.findOneAndUpdate({ _id: boardId }, { { title: title } })
 
     }
-if (title) {
+if (desc) {
     updatedBoard = await BoardModel.findOneAndUpdate({ _id: boardId }, { { desc: desc } })
 
     }
