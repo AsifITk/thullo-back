@@ -11,7 +11,7 @@ const ListModel = require("../models/listModel")
 router.post("/create", async (req, res) => {
     const { title, desc, admin, board, list } = req.body;
     if (!title || !desc || !admin || !board) {
-        res.status(400).send({ msg: 'Povide all info' })
+        return res.status(400).send({ msg: 'Povide all info' })
     }
     let newCard = new CardModel({
         title: title,
@@ -39,7 +39,7 @@ router.post("/create", async (req, res) => {
 router.post("/move", async (req, res) => {
     const { currListId, nextListId, cardId } = req.body;
     if (!currListId || !nextListId) {
-        res.status(400).send{ msg:provide card id }
+        return res.status(400).send{ msg:provide card id }
     }
     let updatedList = await ListModel.findOneAndUpdate({ _id: currListId }, { $pull: { cards: cardId } })
     let updatedList2 = await ListModel.findOneAndUpdate({ _id: nextListId }, { $push: { cards: cardId } })
@@ -63,7 +63,7 @@ router.post("/edit", async (req, res) => {
     const { title, desc, cardId } = req.body;
     let updatedCard = "";
     if (title) {
-        updatedCard = await CardModel.findOneAndUpdate({ _id: cardId }, { { title: title } })
+        return updatedCard = await CardModel.findOneAndUpdate({ _id: cardId }, { { title: title } })
 
     }
 if (desc) {
@@ -115,6 +115,13 @@ router.post("/cover", async (req, res) => {
 
 // Add/Edit/Delete Labels on Card
 router.post("/labels", async (req, res) => {
+    const { label, cardId } = req.body;
+    if (!label) return res.status(400).send("Provide a label");
+    let updatedCard = await CardModel.findOneAndUpdate({ _id: cardId }, { $push: { labels: comment } });
+    if (!updatedCard) return res.status(400).send("Could not update")
+    return res.send('Lavel added')
+
+
 
 });
 

@@ -29,9 +29,9 @@ const cardSchema = new mongoose.Schema(
         type: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       },
     ],
-    labels: {
+    labels: [{
       type: String,
-    },
+    }],
     comments: [
       {
         type: String,
